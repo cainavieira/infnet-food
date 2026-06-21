@@ -7,6 +7,12 @@ export type StackRaizParamList = {
   MainTabs: undefined;
 };
 
+export type MainTabsParamList = {
+  Início: undefined;
+  Carrinho: undefined;
+  Perfil: undefined;
+};
+
 export type HomeStackParamList = {
   HomeScreen: undefined;
   Produtos: { categoria: string };

@@ -1,15 +1,16 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import type { StackRaizParamList, HomeStackParamList } from "./types";
+import type { StackRaizParamList, HomeStackParamList, MainTabsParamList } from "./types";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProdutosScreen from "../screens/ProdutosScreen";
 import ProdutoDetailsScreen from "../screens/ProdutoDetailsScreen";
 import CarrinhoScreen from "../screens/CarrinhoScreen";
+import PerfilScreen from "../screens/PerfilScreen";
 
 const StackRaiz = createNativeStackNavigator<StackRaizParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<MainTabsParamList>();
 
 function HomeStackNavigator() {
   return (
@@ -27,6 +28,7 @@ function MainTabs() {
     <Tab.Navigator>
       <Tab.Screen name="Início" component={HomeStackNavigator} options={{ headerShown: false }} />
       <Tab.Screen name="Carrinho" component={CarrinhoScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Perfil" component={PerfilScreen} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }

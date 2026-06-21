@@ -53,7 +53,7 @@ export default function HomeScreen({ navigation }: HomeProps) {
   );
   return (
     <SafeAreaView style={styles.containerHome}>
-      <Text style={styles.tituloHome}>Escolha por Categoria</Text>
+      <Text style={styles.tituloHome}>Categorias</Text>
       {categorias.length > 0 ? (
         <FlatList
           data={categorias}
