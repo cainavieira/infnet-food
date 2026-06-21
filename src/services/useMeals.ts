@@ -28,6 +28,7 @@ export type Meals = {
   strMeal: string;
   strMealThumb: string;
   strCountry: string;
+  preco: number;
 };
 const getMeals = async (category: string) => {
   const response = await fetch(`${URL_MEALS}${category}`);
@@ -38,6 +39,9 @@ const getMeals = async (category: string) => {
   }
   const dados = await response.json();
   console.log(dados)
-  return dados.meals.slice(0,10)
+  return dados.meals.slice(0, 10).map((meal: any) => ({
+    ...meal,
+    preco: (parseInt(meal.idMeal) % 30) + 10,
+  }))
 };
 export { getMeals };

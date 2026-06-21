@@ -8,31 +8,20 @@ import {
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { useRoute } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack"; //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
-import type { StackParamList } from "../navigation/types";
-import { getMeals } from "../services/useMeals";
-import type { Meals } from "../services/useMeals";
-import { useEffect, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { HomeStackParamList } from "../navigation/types";
+import { useCarrinho } from "../context/CarrinhoContext";
 
 type ProdutoDetalheProp = NativeStackScreenProps<
-  StackParamList,
+  HomeStackParamList,
   "ProdutoDetalhe"
 >;
 
 export default function ProdutoDetailsScreen({ route }: ProdutoDetalheProp) {
-  const [quantidade, setQuantidade] = useState(0);
-
-  function handleIncremento() {
-    setQuantidade(quantidade + 1);
-  }
-  function handleDecremento() {
-    if (quantidade > 0) {
-      setQuantidade(quantidade - 1);
-    }
-  }
-
+  const { itens, adicionarItem, removerItem } = useCarrinho();
   const { item } = route.params;
+  const itemNoCarrinho = itens.find((i) => i.idMeal === item.idMeal);
+  const quantidade = itemNoCarrinho?.quantidade ?? 0;
   return (
     <SafeAreaView style={styles.containerView}>
       <Image source={{ uri: item.strMealThumb }} style={styles.image} />
@@ -46,13 +35,13 @@ export default function ProdutoDetailsScreen({ route }: ProdutoDetalheProp) {
           diversidade da gastronomia mundial.
         </Text>
         <View style={{ flexDirection: "row", gap:20 }}>
-          <Pressable style={styles.btn} onPress={handleIncremento}>
+          <Pressable style={styles.btn} onPress={() => adicionarItem(item)}>
             <Text style={styles.textBtn}>
               Adicionar Carrinho {quantidade > 0 && `+ ${quantidade}`}
             </Text>
           </Pressable>
           {quantidade > 0 && (
-            <Pressable style={styles.btn} onPress={handleDecremento}>
+            <Pressable style={styles.btn} onPress={() => removerItem(item.idMeal)}>
               <Text style={styles.textBtn}>Remover Carrinho</Text>
             </Pressable>
           )}
@@ -80,8 +69,9 @@ const styles = StyleSheet.create({
     backgroundColor: "darkslategray",
   },
   tituloDescricao: {
-    fontSize: 34,
+    fontSize: 30,
     color: "goldenrod",
+    marginTop:20
   },
   image: {
     padding: 10,
@@ -93,13 +83,13 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     fontFamily: "Lato_400Regular",
-    fontSize: 22,
+    fontSize: 20,
     color: "whitesmoke",
     textAlign: "center",
     marginHorizontal: 10,
   },
   btn: {
-   
+
     paddingVertical: 15,
     marginTop: 20,
     backgroundColor: "goldenrod",

@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 700,
     width: "80%",
+    color:"whitesmoke"
   },
   input: {
     width: "80%",

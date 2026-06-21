@@ -1,10 +1,14 @@
-import { Meals } from "../services/useMeals";
+import type { Meals } from "../services/useMeals";
 
-export type StackParamList = {
-  HomeScreen: undefined;
-  Login: undefined;
-  Produtos: {categoria:string};
-  ProdutoDetalhe: {item: Meals}
+//Contrato sobre o que pode receber, undefined significa nao recebe nada, porem com categoria falo que precisa receber isso
+
+export type StackRaizParamList = {
+  LoginScreen: undefined;
+  MainTabs: undefined;
 };
 
-//Contrato sobre o que pode receber, undefined singifica nao recebe nada, porem com categoria falo que precisa receber isso
+export type HomeStackParamList = {
+  HomeScreen: undefined;
+  Produtos: { categoria: string };
+  ProdutoDetalhe: { item: Meals };
+};

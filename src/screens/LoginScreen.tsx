@@ -3,10 +3,10 @@ import { useState,  } from "react";
 import { View, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
-import type { StackParamList } from "../navigation/types";
+import type { StackRaizParamList } from "../navigation/types";
 import FormSimples from "../components/FormSimples";
 
-type LoginProps = NativeStackScreenProps<StackParamList, "Login">;
+type LoginProps = NativeStackScreenProps<StackRaizParamList, "LoginScreen">;
 
 export default function LoginScreen({ navigation }: LoginProps) {
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
       Alert.alert("Preencha email e senha corretamente");
       return;
     }
-    navigation.replace("HomeScreen");
+    navigation.replace("MainTabs");
   };
 
   const validateEmail = () => {

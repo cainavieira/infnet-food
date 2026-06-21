@@ -6,16 +6,15 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { useRoute } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"; //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
-import type { StackParamList } from "../navigation/types";
+import type { HomeStackParamList } from "../navigation/types";
 import { getMeals } from "../services/useMeals";
 import type { Meals } from "../services/useMeals";
 import { useEffect, useState } from "react";
 
-type ProdutoProps = NativeStackScreenProps<StackParamList, "Produtos">;
+type ProdutoProps = NativeStackScreenProps<HomeStackParamList, "Produtos">;
 
 export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
   const [meals, setMeals] = useState<Meals[]>([]);
@@ -43,12 +42,18 @@ export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
         <StatusBar style="auto" />
       </View>
     );
-  const ItemList = ({ strMeal, strMealThumb, strCountry, idMeal }: Meals) => (
+  const ItemList = ({
+    strMeal,
+    strMealThumb,
+    strCountry,
+    idMeal,
+    preco,
+  }: Meals) => (
     <View style={styles.containerList}>
       <Pressable
         onPress={() =>
           navigation.navigate("ProdutoDetalhe", {
-            item: {idMeal,strCountry,strMeal,strMealThumb},
+            item: { idMeal, strCountry, strMeal, strMealThumb, preco },
           })
         }
       >
@@ -59,7 +64,6 @@ export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
   );
   return (
     <SafeAreaView style={styles.containerHome}>
-      <Text style={styles.tituloHome}>Selecione um Produto</Text>
       {meals.length > 0 ? (
         <FlatList
           data={meals}
@@ -70,6 +74,7 @@ export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
               strMealThumb={item.strMealThumb}
               strCountry={item.strCountry}
               idMeal={item.idMeal}
+              preco={item.preco}
             />
           )}
         />
@@ -91,12 +96,12 @@ const styles = StyleSheet.create({
     fontFamily: "Lato_700Bold",
     fontWeight: 700,
     textAlign: "center",
-    color: "linear",
+    color: "goldenrod",
     marginBottom: 10,
   },
   containerHome: {
     backgroundColor: "darkslategray",
-    flex: 1
+    flex: 1,
   },
   containerList: {
     borderRadius: 10,
@@ -117,5 +122,6 @@ const styles = StyleSheet.create({
   paragraph: {
     fontFamily: "Lato_400Regular",
     fontSize: 22,
+    color: "whitesmoke",
   },
 });

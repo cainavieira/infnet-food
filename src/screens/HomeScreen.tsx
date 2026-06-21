@@ -9,12 +9,12 @@ import {
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"; //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
-import type { StackParamList } from "../navigation/types";
+import type { HomeStackParamList } from "../navigation/types";
 import { getCategorias } from "../services/useMeals";
 import type { Category } from "../services/useMeals";
 import { useEffect, useRef, useState } from "react";
 
-type HomeProps = NativeStackScreenProps<StackParamList, "HomeScreen">;
+type HomeProps = NativeStackScreenProps<HomeStackParamList, "HomeScreen">;
 //NativeStackScreenProps é um tipo genérico que recebe dois parâmetros: o primeiro é a lista de parâmetros do stack navigator (StackParamList) e o segundo é o nome da tela para a qual queremos definir as props (HomeScreen). Isso nos permite acessar as props de navegação dentro do componente HomeScreen, como navigation.navigate para navegar para outras telas e a escolha do nativestack é por perfomance, ele é mais leve que o stack navigator tradicional, enquanto perde em customizaçao.
 
 export default function HomeScreen({ navigation }: HomeProps) {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     fontFamily: "Lato_700Bold",
     fontWeight: 700,
     textAlign: "center",
-    color: "linear",
+   color:"goldenrod",
     marginBottom: 10,
   },
   containerHome: {
@@ -112,5 +112,6 @@ const styles = StyleSheet.create({
   paragraph: {
     fontFamily: "Lato_400Regular",
     fontSize: 22,
+    color:"whitesmoke"
   },
 });
