@@ -5,7 +5,8 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
 import type { StackParamList } from "../navigation/types";
 import FormSimples from "../components/FormSimples";
-type LoginProps = NativeStackScreenProps<StackParamList, "LoginScreen">;
+
+type LoginProps = NativeStackScreenProps<StackParamList, "Login">;
 
 export default function LoginScreen({ navigation }: LoginProps) {
   const [email, setEmail] = useState("");

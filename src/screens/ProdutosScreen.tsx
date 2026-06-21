@@ -1,31 +1,33 @@
 import {
   View,
   Text,
+  Pressable,
   StyleSheet,
   FlatList,
   Image,
-  Pressable,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import { useRoute } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"; //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
 import type { StackParamList } from "../navigation/types";
-import { getCategorias } from "../services/useMeals";
-import type { Category } from "../services/useMeals";
-import { useEffect, useRef, useState } from "react";
+import { getMeals } from "../services/useMeals";
+import type { Meals } from "../services/useMeals";
+import { useEffect, useState } from "react";
 
-type HomeProps = NativeStackScreenProps<StackParamList, "HomeScreen">;
-//NativeStackScreenProps é um tipo genérico que recebe dois parâmetros: o primeiro é a lista de parâmetros do stack navigator (StackParamList) e o segundo é o nome da tela para a qual queremos definir as props (HomeScreen). Isso nos permite acessar as props de navegação dentro do componente HomeScreen, como navigation.navigate para navegar para outras telas e a escolha do nativestack é por perfomance, ele é mais leve que o stack navigator tradicional, enquanto perde em customizaçao.
+type ProdutoProps = NativeStackScreenProps<StackParamList, "Produtos">;
 
-export default function HomeScreen({ navigation }: HomeProps) {
-  const [categorias, setCategorias] = useState<Category[]>([]);
+export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
+  const [meals, setMeals] = useState<Meals[]>([]);
   const [loading, setLoading] = useState(true);
+  const { categoria } = route.params;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dados = await getCategorias();
-        setCategorias(dados || []);
+        const dados = await getMeals(categoria);
+        setMeals(dados || []);
+        console.log("dados recebidos:", dados);
       } catch (error) {
         console.log(error);
       } finally {
@@ -41,33 +43,35 @@ export default function HomeScreen({ navigation }: HomeProps) {
         <StatusBar style="auto" />
       </View>
     );
-  const ItemList = ({ strCategory, strCategoryThumb }: Category) => (
+  const ItemList = ({ strMeal, strMealThumb, strCountry, idMeal }: Meals) => (
     <View style={styles.containerList}>
-      <Pressable onPress={() => navigation.navigate("Produtos", {
-        categoria: strCategory
-      })}>
-        <Image source={{ uri: strCategoryThumb }} style={styles.image} />
+      <Pressable
+        onPress={() =>
+          navigation.navigate("ProdutoDetalhe", {
+            item: {idMeal,strCountry,strMeal,strMealThumb},
+          })
+        }
+      >
+        <Image source={{ uri: strMealThumb }} style={styles.image} />
       </Pressable>
-      <Text style={styles.paragraph}>{strCategory}</Text>
+      <Text style={styles.paragraph}>{strMeal}</Text>
     </View>
   );
   return (
     <SafeAreaView style={styles.containerHome}>
-      <Text style={styles.tituloHome}>Escolha por Categoria</Text>
-      {categorias.length > 0 ? (
+      <Text style={styles.tituloHome}>Selecione um Produto</Text>
+      {meals.length > 0 ? (
         <FlatList
-          data={categorias}
-          keyExtractor={(item) => item.idCategory}
+          data={meals}
+          keyExtractor={(item) => item.idMeal}
           renderItem={({ item }) => (
             <ItemList
-              strCategory={item.strCategory}
-              strCategoryThumb={item.strCategoryThumb}
-              strCategoryDescription={item.strCategoryDescription}
-              idCategory={item.idCategory}
+              strMeal={item.strMeal}
+              strMealThumb={item.strMealThumb}
+              strCountry={item.strCountry}
+              idMeal={item.idMeal}
             />
           )}
-          numColumns={2}
-          columnWrapperStyle={{ gap: 20 }}
         />
       ) : (
         <View
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
   },
   containerHome: {
     backgroundColor: "darkslategray",
+    flex: 1
   },
   containerList: {
     borderRadius: 10,
