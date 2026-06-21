@@ -1,5 +1,6 @@
 import { Alert } from "react-native";
-import { useState } from "react";
+import { useState,  } from "react";
+import { View, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
 import type { StackParamList } from "../navigation/types";
@@ -13,7 +14,7 @@ export default function LoginScreen({ navigation }: LoginProps) {
 
   const errors = {
     email: "Por favor, entre um email valido.",
-  }
+  };
 
   const onPress = () => {
     validateEmail(); //O estado atualiza tambem no onPress
@@ -31,14 +32,14 @@ export default function LoginScreen({ navigation }: LoginProps) {
     setErroEmail(!email.includes("@") ? errors.email : "");
   };
   return (
-    <FormSimples
-      email={email}
-      setEmail={setEmail} // nao valida
-      senha={senha}
-      setSenha={setSenha}
-      onPress={onPress}
-      erroEmail={erroEmail} 
-      onBlurEmail={validateEmail} // só valida ao sair do campo
-    />
+      <FormSimples
+        email={email}
+        setEmail={setEmail} // nao valida
+        senha={senha}
+        setSenha={setSenha}
+        onPress={onPress}
+        erroEmail={erroEmail}
+        onBlurEmail={validateEmail} // só valida ao sair do campo
+      />
   );
 }
