@@ -53,7 +53,7 @@ export default function HomeScreen() {
   );
   return (
     <SafeAreaView style={styles.containerHome}>
-      <Text style={styles.tituloHome}>Categoria de Refeiçoes</Text>
+      <Text style={styles.tituloHome}>Escolha por Categoria</Text>
       {categorias.length > 0 ? (
         <FlatList
           data={categorias}
@@ -66,6 +66,8 @@ export default function HomeScreen() {
               idCategory={item.idCategory}
             />
           )}
+          numColumns={2}
+           columnWrapperStyle={{ gap: 20 }}
         />
       ) : (
         <View
@@ -82,6 +84,7 @@ const styles = StyleSheet.create({
   tituloHome:{
     fontSize:24,
     fontStyle:"italic",
+    fontFamily: "Lato_700Bold",
     fontWeight:700,
     textAlign:"center",
     color:"linear",
@@ -96,17 +99,18 @@ const styles = StyleSheet.create({
     borderColor: "goldenrod",
     justifyContent:"center",
     alignItems:"center",
-    gap:20,
+    gap:10,
+    marginLeft:10
   },
   image: {
     padding: 10,
     borderRadius: 5,
     marginTop: 20,
-    width: 250,
-    height: 150,
+    width: 150,
+    height: 80,
   },
   paragraph: {
-    fontFamily: "Latos",
-    fontSize:28
+    fontFamily: "Lato_400Regular",
+    fontSize:22
   },
 });
