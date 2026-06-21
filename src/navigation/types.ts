@@ -13,6 +13,12 @@ export type MainTabsParamList = {
   Perfil: undefined;
 };
 
+export type PerfilStackParamList = {
+  PerfilScreen: undefined;
+  Pedidos: undefined;
+  PedidosRealizados: undefined;
+};
+
 export type HomeStackParamList = {
   HomeScreen: undefined;
   Produtos: { categoria: string };

@@ -1,10 +1,14 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { PerfilStackParamList } from "../navigation/types";
 import { getUsuario } from "../services/useUser";
 import type { User } from "../services/useUser";
 
-export default function PerfilScreen() {
+type PerfilProps = NativeStackScreenProps<PerfilStackParamList, "PerfilScreen">;
+
+export default function PerfilScreen({ navigation }: PerfilProps) {
   const [usuario, setUsuario] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,6 +43,9 @@ export default function PerfilScreen() {
       </Text>
       <Text style={styles.info}>{usuario?.email}</Text>
       <Text style={styles.info}>{usuario?.age} anos</Text>
+      <Pressable style={styles.btn} onPress={() => navigation.navigate("Pedidos")}>
+        <Text style={styles.textBtn}>Pedidos</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -74,5 +81,17 @@ const styles = StyleSheet.create({
     fontFamily: "Lato_400Regular",
     fontSize: 16,
     color: "whitesmoke",
+  },
+  btn: {
+    marginTop: 20,
+    backgroundColor: "goldenrod",
+    paddingVertical: 14,
+    paddingHorizontal: 40,
+    borderRadius: 6,
+  },
+  textBtn: {
+    fontFamily: "Lato_700Bold",
+    fontSize: 16,
+    textAlign: "center",
   },
 });
