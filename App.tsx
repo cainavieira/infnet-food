@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts, Lato_400Regular, Lato_700Bold } from '@expo-google-fonts/lato';
-import { View, Text } from 'react-native';
 import AppNavigator from "./src/navigation/AppNavigator";
 import { CarrinhoProvider } from "./src/context/CarrinhoContext";
+import Carregando from "./src/components/Carregando";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -11,11 +11,7 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Carregando...</Text>
-      </View>
-    );
+    return <Carregando />;
   }
 
   return (

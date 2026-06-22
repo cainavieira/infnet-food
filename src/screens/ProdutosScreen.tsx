@@ -7,12 +7,12 @@ import {
   Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"; //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
 import type { HomeStackParamList } from "../navigation/types";
 import { getMeals } from "../services/useMeals";
 import type { Meals } from "../services/useMeals";
 import { useEffect, useState } from "react";
+import Carregando from "../components/Carregando";
 
 type ProdutoProps = NativeStackScreenProps<HomeStackParamList, "Produtos">;
 
@@ -35,13 +35,7 @@ export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
     };
     fetchData();
   }, []);
-  if (loading)
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Carregando Categorias...</Text>
-        <StatusBar style="auto" />
-      </View>
-    );
+  if (loading) return <Carregando />;
   const ItemList = ({
     strMeal,
     strMealThumb,

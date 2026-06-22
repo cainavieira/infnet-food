@@ -7,12 +7,12 @@ import {
   Pressable,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"; //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
 import type { HomeStackParamList } from "../navigation/types";
 import { getCategorias } from "../services/useMeals";
 import type { Category } from "../services/useMeals";
 import { useEffect, useRef, useState } from "react";
+import Carregando from "../components/Carregando";
 
 type HomeProps = NativeStackScreenProps<HomeStackParamList, "HomeScreen">;
 //NativeStackScreenProps é um tipo genérico que recebe dois parâmetros: o primeiro é a lista de parâmetros do stack navigator (StackParamList) e o segundo é o nome da tela para a qual queremos definir as props (HomeScreen). Isso nos permite acessar as props de navegação dentro do componente HomeScreen, como navigation.navigate para navegar para outras telas e a escolha do nativestack é por perfomance, ele é mais leve que o stack navigator tradicional, enquanto perde em customizaçao.
@@ -34,13 +34,7 @@ export default function HomeScreen({ navigation }: HomeProps) {
     };
     fetchData();
   }, []);
-  if (loading)
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Carregando Categorias...</Text>
-        <StatusBar style="auto" />
-      </View>
-    );
+  if (loading) return <Carregando />;
   const ItemList = ({ strCategory, strCategoryThumb }: Category) => (
     <View style={styles.containerList}>
       <Pressable onPress={() => navigation.navigate("Produtos", {

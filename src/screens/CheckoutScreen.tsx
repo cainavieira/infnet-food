@@ -17,6 +17,7 @@ export default function CheckoutScreen({ route }: CheckoutScreenProp) {
   const [estado, setEstado] = useState("RJ");
   const [metodoPagamento, setMetodoPagamento] = useState("Cartão de Crédito");
   const [erro, setErro] = useState("");
+  const [confirmado, setConfirmado] = useState(false);
 
   useEffect(() => {
     getUsuario().then((usuario) => {
@@ -33,6 +34,7 @@ export default function CheckoutScreen({ route }: CheckoutScreenProp) {
       return;
     }
     setErro("");
+    setConfirmado(true);
   }
 
   return (
@@ -53,6 +55,7 @@ export default function CheckoutScreen({ route }: CheckoutScreenProp) {
           setMetodoPagamento={setMetodoPagamento}
           onPress={confirmarPedido}
           erro={erro}
+          confirmado={confirmado}
         />
       </ScrollView>
     </SafeAreaView>

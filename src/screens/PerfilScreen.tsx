@@ -1,10 +1,11 @@
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import { Text, Image, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { PerfilStackParamList } from "../navigation/types";
 import { getUsuario } from "../services/useUser";
 import type { User } from "../services/useUser";
+import Carregando from "../components/Carregando";
 
 type PerfilProps = NativeStackScreenProps<PerfilStackParamList, "PerfilScreen">;
 
@@ -26,13 +27,7 @@ export default function PerfilScreen({ navigation }: PerfilProps) {
     fetchData();
   }, []);
 
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Carregando perfil...</Text>
-      </View>
-    );
-  }
+  if (loading) return <Carregando />;
 
   return (
     <SafeAreaView style={styles.containerView}>

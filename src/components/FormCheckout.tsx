@@ -13,6 +13,7 @@ type FormCheckoutProps = {
   setMetodoPagamento: (valor: string) => void;
   onPress: () => void;
   erro: string;
+  confirmado: boolean;
 };
 
 export default function FormCheckout({
@@ -28,6 +29,7 @@ export default function FormCheckout({
   setMetodoPagamento,
   onPress,
   erro,
+  confirmado,
 }: FormCheckoutProps) {
   return (
     <View style={styles.container}>
@@ -83,9 +85,9 @@ export default function FormCheckout({
       </View>
       {erro ? <Text style={styles.erro}>{erro}</Text> : null}
       <View style={styles.subContainer}>
-        <TouchableOpacity onPress={onPress} style={styles.botaoT} activeOpacity={0.8}>
+        <TouchableOpacity onPress={onPress} style={[styles.botaoT, confirmado && styles.btnConfirmado]} activeOpacity={0.8}>
           <Text style={{ textAlign: "center", fontFamily: "Lato_700Bold", color: "darkslategray" }}>
-            Confirmar Pedido
+            {confirmado ? "Pedido Confirmado 👍" : "Confirmar Pedido"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -136,5 +138,8 @@ const styles = StyleSheet.create({
     color: "red",
     marginTop: 5,
     fontSize: 15,
+  },
+  btnConfirmado: {
+    backgroundColor: "green",
   },
 });
