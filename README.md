@@ -52,7 +52,5 @@ Depois é só escanear o QR code com o app Expo Go no celular.
 - Expo SDK 54
 - React Native
 - TypeScript
-- React Navigation (stack + bottom tabs)
 - expo-notifications
-- lottie-react-native
-- react-native-webview
+
