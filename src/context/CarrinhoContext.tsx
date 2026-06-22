@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import * as Notifications from 'expo-notifications';
 import type { Meals } from "../services/useMeals";
 
 type ItemCarrinho = Meals & { quantidade: number };
@@ -22,6 +23,12 @@ export function CarrinhoProvider({ children }: { children: React.ReactNode }) {
           i.idMeal === meal.idMeal ? { ...i, quantidade: i.quantidade + 1 } : i
         );
       }// se o item ta no carrinho, incrementa a quantidade
+      if (anterior.length === 0) {
+        Notifications.scheduleNotificationAsync({
+          content: { title: "Carrinho", body: "Você tem um item no carrinho!" },
+          trigger: null,//agora
+        });
+      }//Lança a notificaçao quando o user adiciona 1 item
       return [...anterior, { ...meal, quantidade: 1 }];
     });
   }
