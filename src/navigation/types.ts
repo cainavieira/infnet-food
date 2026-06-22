@@ -11,6 +11,7 @@ export type MainTabsParamList = {
   Início: undefined;
   Carrinho: undefined;
   Perfil: undefined;
+  Mapa: undefined;
 };
 
 export type PerfilStackParamList = {
