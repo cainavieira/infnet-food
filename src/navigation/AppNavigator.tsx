@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import type { StackRaizParamList, HomeStackParamList, MainTabsParamList, PerfilStackParamList } from "./types";
+import type { StackRaizParamList, HomeStackParamList, MainTabsParamList, PerfilStackParamList, MapaStackParamList } from "./types";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProdutosScreen from "../screens/ProdutosScreen";
@@ -10,10 +10,12 @@ import PerfilScreen from "../screens/PerfilScreen";
 import PedidosScreen from "../screens/PedidosScreen";
 import PedidosRealizadosScreen from "../screens/PedidosRealizadosScreen";
 import MapaScreen from "../screens/MapaScreen";
+import RestauranteDetailsScreen from "../screens/RestauranteDetailsScreen";
 
 const StackRaiz = createNativeStackNavigator<StackRaizParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const PerfilStack = createNativeStackNavigator<PerfilStackParamList>();
+const MapaStack = createNativeStackNavigator<MapaStackParamList>();
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 
 function HomeStackNavigator() {
@@ -26,6 +28,15 @@ function HomeStackNavigator() {
   );
 }
 //screens relacionada aos produtos e categoria que se organiza em pilha
+
+function MapaStackNavigator() {
+  return (
+    <MapaStack.Navigator>
+      <MapaStack.Screen name="MapaScreen" component={MapaScreen} options={{ headerShown: false }} />
+      <MapaStack.Screen name="RestauranteDetalhe" component={RestauranteDetailsScreen} />
+    </MapaStack.Navigator>
+  );
+}
 
 function PerfilStackNavigator() {
   return (
@@ -43,7 +54,7 @@ function MainTabs() {
       <Tab.Screen name="Início" component={HomeStackNavigator} options={{ headerShown: false }} />
       <Tab.Screen name="Carrinho" component={CarrinhoScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Perfil" component={PerfilStackNavigator} options={{ headerShown: false }} />
-      <Tab.Screen name="Mapa" component={MapaScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Mapa" component={MapaStackNavigator} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }

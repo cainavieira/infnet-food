@@ -3,7 +3,6 @@ import {
   Text,
   Pressable,
   StyleSheet,
-  FlatList,
   Image,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -89,15 +88,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   btn: {
-
     paddingVertical: 15,
+    paddingHorizontal: 14,
     marginTop: 20,
     backgroundColor: "goldenrod",
     borderRadius: 6,
-    width: 100,
   },
-  textBtn:{
-    textAlign:"center",
-
+  textBtn: {
+    fontFamily: "Lato_400Regular",
+    fontSize: 14,
+    color: "darkslategray",
+    textAlign: "center",
   }
 });

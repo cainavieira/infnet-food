@@ -1,6 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { restaurantes } from "../utils/restaurantesMock";
+import type { MapaStackParamList } from "../navigation/types";
+
+type MapaScreenProp = NativeStackScreenProps<MapaStackParamList, "MapaScreen">;
 
 const dadosJson = JSON.stringify(restaurantes);// precisa ser json porque html apenas entende texto
 
@@ -36,6 +40,9 @@ const htmlMapa = `
           permanent: true,
           direction: 'top',
           offset: [0, -10],
+        })
+        .on('click', function () {
+          window.ReactNativeWebView.postMessage(String(r.restaurantID));
         });
     });
   <\/script>
@@ -43,7 +50,13 @@ const htmlMapa = `
 </html>
 `;
 
-export default function MapaScreen() {
+export default function MapaScreen({ navigation }: MapaScreenProp) {
+  function handleMensagem({ nativeEvent }: { nativeEvent: { data: string } }) {
+    const id = Number(nativeEvent.data);
+    const restaurante = restaurantes.find((r) => r.restaurantID === id);
+    if (restaurante) navigation.navigate("RestauranteDetalhe", { restaurante });
+  }
+
   return (
     <View style={estilos.container}>
       <WebView
@@ -52,6 +65,7 @@ export default function MapaScreen() {
         javaScriptEnabled
         domStorageEnabled
         mixedContentMode="always"
+        onMessage={handleMensagem}
       />
     </View>
   );
