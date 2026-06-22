@@ -6,12 +6,17 @@ import type { PerfilStackParamList } from "../navigation/types";
 import { getUsuario } from "../services/useUser";
 import type { User } from "../services/useUser";
 import Carregando from "../components/Carregando";
+import { useTema } from "../context/TemaContext";
 
 type PerfilProps = NativeStackScreenProps<PerfilStackParamList, "PerfilScreen">;
 
 export default function PerfilScreen({ navigation }: PerfilProps) {
   const [usuario, setUsuario] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+  const corTexto = escuro ? 'whitesmoke' : 'darkslategray';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,14 +35,14 @@ export default function PerfilScreen({ navigation }: PerfilProps) {
   if (loading) return <Carregando />;
 
   return (
-    <SafeAreaView style={styles.containerView}>
+    <SafeAreaView style={[styles.containerView, { backgroundColor: corFundo }]}>
       <Text style={styles.titulo}>Perfil</Text>
       <Image source={{ uri: usuario?.image }} style={styles.foto} />
-      <Text style={styles.nome}>
+      <Text style={[styles.nome, { color: corTexto }]}>
         {usuario?.firstName} {usuario?.lastName}
       </Text>
-      <Text style={styles.info}>{usuario?.email}</Text>
-      <Text style={styles.info}>{usuario?.age} anos</Text>
+      <Text style={[styles.info, { color: corTexto }]}>{usuario?.email}</Text>
+      <Text style={[styles.info, { color: corTexto }]}>{usuario?.age} anos</Text>
       <Pressable style={styles.btn} onPress={() => navigation.navigate("Pedidos")}>
         <Text style={styles.textBtn}>Pedidos</Text>
       </Pressable>

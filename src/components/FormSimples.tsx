@@ -6,6 +6,7 @@ import {
   TextInput,
 } from "react-native";
 //Tipo exportado pela biblioteca de navegação para definir as props de uma tela em um stack navigator.
+import { useTema } from "../context/TemaContext";
 
 type FormSimplesProps = {
   email: string;
@@ -26,12 +27,17 @@ export default function FormSimples({
   erroEmail,
   onBlurEmail,
 }: FormSimplesProps) {
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+  const corTexto = escuro ? 'whitesmoke' : 'darkslategray';
+
   return (
-    <View style={styles.container}>
-      <View style={styles.subContainer}>
-        <Text style={styles.paragraph}>Email: </Text>
+    <View style={[styles.container, { backgroundColor: corFundo }]}>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
+        <Text style={[styles.paragraph, { color: corTexto }]}>Email: </Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: corTexto }]}
           placeholder="Escreva email..."
           placeholderTextColor="rgba(0,0,0,0.4)"
           value={email}
@@ -40,10 +46,10 @@ export default function FormSimples({
         />
         {erroEmail ? <Text style={styles.error}>{erroEmail}</Text> : ""}
       </View>
-      <View style={styles.subContainer}>
-        <Text style={styles.paragraph}>Senha: </Text>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
+        <Text style={[styles.paragraph, { color: corTexto }]}>Senha: </Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: corTexto }]}
           placeholder="Escreva senha..."
           placeholderTextColor="rgba(0,0,0,0.4)"
           value={senha}
@@ -52,7 +58,7 @@ export default function FormSimples({
         />
       </View>
 
-      <View style={styles.subContainer}>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
         <TouchableOpacity
           onPress={onPress}
           style={styles.botaoT}

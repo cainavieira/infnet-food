@@ -5,11 +5,16 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { CarrinhoStackParamList } from "../navigation/types";
 import { getUsuario } from "../services/useUser";
 import FormCheckout from "../components/FormCheckout";
+import { useTema } from "../context/TemaContext";
 
 type CheckoutScreenProp = NativeStackScreenProps<CarrinhoStackParamList, "Checkout">;
 
 export default function CheckoutScreen({ route }: CheckoutScreenProp) {
   const { total } = route.params;
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+  const corTexto = escuro ? 'whitesmoke' : 'darkslategray';
 
   const [nome, setNome] = useState("");
   const [rua, setRua] = useState("Rua XV de Novembro, 123");
@@ -38,10 +43,10 @@ export default function CheckoutScreen({ route }: CheckoutScreenProp) {
   }
 
   return (
-    <SafeAreaView style={estilos.containerView}>
+    <SafeAreaView style={[estilos.containerView, { backgroundColor: corFundo }]}>
       <ScrollView contentContainerStyle={estilos.scroll}>
         <Text style={estilos.titulo}>Checkout</Text>
-        <Text style={estilos.totalTexto}>Total: R$ {total.toFixed(2)}</Text>
+        <Text style={[estilos.totalTexto, { color: corTexto }]}>Total: R$ {total.toFixed(2)}</Text>
         <FormCheckout
           nome={nome}
           setNome={setNome}

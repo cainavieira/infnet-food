@@ -13,6 +13,7 @@ import PedidosRealizadosScreen from "../screens/PedidosRealizadosScreen";
 import MapaScreen from "../screens/MapaScreen";
 import CheckoutScreen from "../screens/CheckoutScreen";
 import RestauranteDetailsScreen from "../screens/RestauranteDetailsScreen";
+import ConfiguracoesScreen from "../screens/ConfiguracoesScreen";
 
 const StackRaiz = createNativeStackNavigator<StackRaizParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
@@ -67,6 +68,7 @@ function MainTabs() {
       <Tab.Screen name="Carrinho" component={CarrinhoStackNavigator} options={{ headerShown: false }} />
       <Tab.Screen name="Perfil" component={PerfilStackNavigator} options={{ headerShown: false }} />
       <Tab.Screen name="Mapa" component={MapaStackNavigator} options={{ headerShown: false }} />
+      <Tab.Screen name="Configurações" component={ConfiguracoesScreen} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }

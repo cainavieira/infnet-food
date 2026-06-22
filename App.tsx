@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useFonts, Lato_400Regular, Lato_700Bold } from '@expo-google-fonts/lato';
 import AppNavigator from "./src/navigation/AppNavigator";
 import { CarrinhoProvider } from "./src/context/CarrinhoContext";
+import { TemaProvider } from "./src/context/TemaContext";
 import Carregando from "./src/components/Carregando";
 
 export default function App() {
@@ -15,11 +16,13 @@ export default function App() {
   }
 
   return (
-    <CarrinhoProvider>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
-    </CarrinhoProvider>
+    <TemaProvider>
+      <CarrinhoProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </CarrinhoProvider>
+    </TemaProvider>
   );
 }
 

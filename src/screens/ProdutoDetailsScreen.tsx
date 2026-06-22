@@ -10,6 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { HomeStackParamList } from "../navigation/types";
 import { useCarrinho } from "../context/CarrinhoContext";
+import { useTema } from "../context/TemaContext";
 
 type ProdutoDetalheProp = NativeStackScreenProps<
   HomeStackParamList,
@@ -18,16 +19,20 @@ type ProdutoDetalheProp = NativeStackScreenProps<
 
 export default function ProdutoDetailsScreen({ route }: ProdutoDetalheProp) {
   const { itens, adicionarItem, removerItem } = useCarrinho();
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+  const corTexto = escuro ? 'whitesmoke' : 'darkslategray';
   const { item } = route.params;
   const itemNoCarrinho = itens.find((i) => i.idMeal === item.idMeal);
   const quantidade = itemNoCarrinho?.quantidade ?? 0;
   return (
-    <SafeAreaView style={styles.containerView}>
+    <SafeAreaView style={[styles.containerView, { backgroundColor: corFundo }]}>
       <Image source={{ uri: item.strMealThumb }} style={styles.image} />
-      <Text style={styles.paragraph}>{item.strMeal}</Text>
-      <View style={styles.containerDescricao}>
+      <Text style={[styles.paragraph, { color: corTexto }]}>{item.strMeal}</Text>
+      <View style={[styles.containerDescricao, { backgroundColor: corFundo }]}>
         <Text style={styles.tituloDescricao}>Descrição</Text>
-        <Text style={styles.paragraph}>
+        <Text style={[styles.paragraph, { color: corTexto }]}>
           Descubra os sabores autênticos de {item.strMeal}, um prato tradicional
           da culinária {item.strCountry}. Cada detalhe foi pensado para trazer
           uma experiência única ao seu paladar, celebrando a riqueza e a

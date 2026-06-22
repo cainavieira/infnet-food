@@ -13,12 +13,17 @@ import { getMeals } from "../services/useMeals";
 import type { Meals } from "../services/useMeals";
 import { useEffect, useState } from "react";
 import Carregando from "../components/Carregando";
+import { useTema } from "../context/TemaContext";
 
 type ProdutoProps = NativeStackScreenProps<HomeStackParamList, "Produtos">;
 
 export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
   const [meals, setMeals] = useState<Meals[]>([]);
   const [loading, setLoading] = useState(true);
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+  const corTexto = escuro ? 'whitesmoke' : 'darkslategray';
   const { categoria } = route.params;
 
   useEffect(() => {
@@ -53,11 +58,11 @@ export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
       >
         <Image source={{ uri: strMealThumb }} style={styles.image} />
       </Pressable>
-      <Text style={styles.paragraph}>{strMeal}</Text>
+      <Text style={[styles.paragraph, { color: corTexto }]}>{strMeal}</Text>
     </View>
   );
   return (
-    <SafeAreaView style={styles.containerHome}>
+    <SafeAreaView style={[styles.containerHome, { backgroundColor: corFundo }]}>
       {meals.length > 0 ? (
         <FlatList
           data={meals}
@@ -76,7 +81,7 @@ export default function ProdutosScreen({ route, navigation }: ProdutoProps) {
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          <Text>Lista nao carregada...</Text>
+          <Text style={{ color: corTexto }}>Lista nao carregada...</Text>
         </View>
       )}
     </SafeAreaView>

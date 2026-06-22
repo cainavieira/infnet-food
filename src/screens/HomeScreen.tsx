@@ -13,6 +13,7 @@ import { getCategorias } from "../services/useMeals";
 import type { Category } from "../services/useMeals";
 import { useEffect, useRef, useState } from "react";
 import Carregando from "../components/Carregando";
+import { useTema } from "../context/TemaContext";
 
 type HomeProps = NativeStackScreenProps<HomeStackParamList, "HomeScreen">;
 //NativeStackScreenProps é um tipo genérico que recebe dois parâmetros: o primeiro é a lista de parâmetros do stack navigator (StackParamList) e o segundo é o nome da tela para a qual queremos definir as props (HomeScreen). Isso nos permite acessar as props de navegação dentro do componente HomeScreen, como navigation.navigate para navegar para outras telas e a escolha do nativestack é por perfomance, ele é mais leve que o stack navigator tradicional, enquanto perde em customizaçao.
@@ -20,6 +21,10 @@ type HomeProps = NativeStackScreenProps<HomeStackParamList, "HomeScreen">;
 export default function HomeScreen({ navigation }: HomeProps) {
   const [categorias, setCategorias] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+  const corTexto = escuro ? 'whitesmoke' : 'darkslategray';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,11 +47,11 @@ export default function HomeScreen({ navigation }: HomeProps) {
       })}>
         <Image source={{ uri: strCategoryThumb }} style={styles.image} />
       </Pressable>
-      <Text style={styles.paragraph}>{strCategory}</Text>
+      <Text style={[styles.paragraph, { color: corTexto }]}>{strCategory}</Text>
     </View>
   );
   return (
-    <SafeAreaView style={styles.containerHome}>
+    <SafeAreaView style={[styles.containerHome, { backgroundColor: corFundo }]}>
       <Text style={styles.tituloHome}>Categorias</Text>
       {categorias.length > 0 ? (
         <FlatList
@@ -67,7 +72,7 @@ export default function HomeScreen({ navigation }: HomeProps) {
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          <Text>Lista nao carregada...</Text>
+          <Text style={{ color: corTexto }}>Lista nao carregada...</Text>
         </View>
       )}
     </SafeAreaView>

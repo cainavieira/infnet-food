@@ -2,12 +2,17 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { PerfilStackParamList } from "../navigation/types";
+import { useTema } from "../context/TemaContext";
 
 type PedidosProps = NativeStackScreenProps<PerfilStackParamList, "Pedidos">;
 
 export default function PedidosScreen({ navigation }: PedidosProps) {
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+
   return (
-    <SafeAreaView style={styles.containerView}>
+    <SafeAreaView style={[styles.containerView, { backgroundColor: corFundo }]}>
       <Text style={styles.titulo}>Pedidos</Text>
       <Pressable
         style={styles.btn}

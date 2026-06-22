@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
+import { useTema } from "../context/TemaContext";
 
 type FormCheckoutProps = {
   nome: string;
@@ -31,52 +32,57 @@ export default function FormCheckout({
   erro,
   confirmado,
 }: FormCheckoutProps) {
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+  const corTexto = escuro ? 'whitesmoke' : 'darkslategray';
+
   return (
-    <View style={styles.container}>
-      <View style={styles.subContainer}>
-        <Text style={styles.paragraph}>Nome:</Text>
+    <View style={[styles.container, { backgroundColor: corFundo }]}>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
+        <Text style={[styles.paragraph, { color: corTexto }]}>Nome:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: corTexto }]}
           placeholder="Seu nome completo..."
           placeholderTextColor="rgba(0,0,0,0.4)"
           value={nome}
           onChangeText={setNome}
         />
       </View>
-      <View style={styles.subContainer}>
-        <Text style={styles.paragraph}>Rua:</Text>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
+        <Text style={[styles.paragraph, { color: corTexto }]}>Rua:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: corTexto }]}
           placeholder="Rua e número..."
           placeholderTextColor="rgba(0,0,0,0.4)"
           value={rua}
           onChangeText={setRua}
         />
       </View>
-      <View style={styles.subContainer}>
-        <Text style={styles.paragraph}>Cidade:</Text>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
+        <Text style={[styles.paragraph, { color: corTexto }]}>Cidade:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: corTexto }]}
           placeholder="Cidade..."
           placeholderTextColor="rgba(0,0,0,0.4)"
           value={cidade}
           onChangeText={setCidade}
         />
       </View>
-      <View style={styles.subContainer}>
-        <Text style={styles.paragraph}>Estado:</Text>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
+        <Text style={[styles.paragraph, { color: corTexto }]}>Estado:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: corTexto }]}
           placeholder="Estado..."
           placeholderTextColor="rgba(0,0,0,0.4)"
           value={estado}
           onChangeText={setEstado}
         />
       </View>
-      <View style={styles.subContainer}>
-        <Text style={styles.paragraph}>Método de Pagamento:</Text>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
+        <Text style={[styles.paragraph, { color: corTexto }]}>Método de Pagamento:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: corTexto }]}
           placeholder="Pix, Cartão de Crédito..."
           placeholderTextColor="rgba(0,0,0,0.4)"
           value={metodoPagamento}
@@ -84,7 +90,7 @@ export default function FormCheckout({
         />
       </View>
       {erro ? <Text style={styles.erro}>{erro}</Text> : null}
-      <View style={styles.subContainer}>
+      <View style={[styles.subContainer, { backgroundColor: corFundo }]}>
         <TouchableOpacity onPress={onPress} style={[styles.botaoT, confirmado && styles.btnConfirmado]} activeOpacity={0.8}>
           <Text style={{ textAlign: "center", fontFamily: "Lato_700Bold", color: "darkslategray" }}>
             {confirmado ? "Pedido Confirmado 👍" : "Confirmar Pedido"}

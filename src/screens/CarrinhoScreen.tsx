@@ -2,25 +2,30 @@ import { View, Text, FlatList, Image, StyleSheet, Pressable } from "react-native
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useCarrinho } from "../context/CarrinhoContext";
+import { useTema } from "../context/TemaContext";
 import type { CarrinhoStackParamList } from "../navigation/types";
 
 type CarrinhoScreenProp = NativeStackScreenProps<CarrinhoStackParamList, "CarrinhoScreen">;
 
 export default function CarrinhoScreen({ navigation }: CarrinhoScreenProp) {
   const { itens } = useCarrinho();
+  const { tema } = useTema();
+  const escuro = tema === 'escuro';
+  const corFundo = escuro ? 'darkslategray' : 'whitesmoke';
+  const corTexto = escuro ? 'whitesmoke' : 'darkslategray';
 
   const total = itens.reduce((acc, i) => acc + i.preco * i.quantidade, 0);
 
   if (itens.length === 0) {
     return (
-      <SafeAreaView style={styles.containerView}>
-        <Text style={styles.textoVazio}>Seu carrinho está vazio.</Text>
+      <SafeAreaView style={[styles.containerView, { backgroundColor: corFundo }]}>
+        <Text style={[styles.textoVazio, { color: corTexto }]}>Seu carrinho está vazio.</Text>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.containerView}>
+    <SafeAreaView style={[styles.containerView, { backgroundColor: corFundo }]}>
       <Text style={styles.titulo}>Carrinho</Text>
       <FlatList
         data={itens}
@@ -29,9 +34,9 @@ export default function CarrinhoScreen({ navigation }: CarrinhoScreenProp) {
           <View style={styles.containerItem}>
             <Image source={{ uri: item.strMealThumb }} style={styles.image} />
             <View style={styles.info}>
-              <Text style={styles.nomeMeal}>{item.strMeal}</Text>
+              <Text style={[styles.nomeMeal, { color: corTexto }]}>{item.strMeal}</Text>
               <Text style={styles.quantidade}>Quantidade: {item.quantidade}</Text>
-              <Text style={styles.preco}>R$ {item.preco?.toFixed(2)} / un.</Text>
+              <Text style={[styles.preco, { color: corTexto }]}>R$ {item.preco?.toFixed(2)} / un.</Text>
             </View>
             <Text style={styles.subtotal}>
               R$ {(item.preco * item.quantidade)?.toFixed(2)}
@@ -41,7 +46,7 @@ export default function CarrinhoScreen({ navigation }: CarrinhoScreenProp) {
         ListFooterComponent={
           <View style={styles.containerTotal}>
             <View>
-              <Text style={styles.textoTotal}>Total</Text>
+              <Text style={[styles.textoTotal, { color: corTexto }]}>Total</Text>
               <Text style={styles.valorTotal}>R$ {total.toFixed(2)}</Text>
             </View>
             <Pressable
