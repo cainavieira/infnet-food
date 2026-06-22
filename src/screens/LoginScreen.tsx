@@ -6,11 +6,13 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { StackRaizParamList } from "../navigation/types";
 import FormSimples from "../components/FormSimples";
 
-type LoginProps = NativeStackScreenProps<StackRaizParamList, "LoginScreen">;
+type LoginProps = NativeStackScreenProps<StackRaizParamList, "LoginScreen"> & {
+  onLogin: () => void;
+};
 
-export default function LoginScreen({ navigation }: LoginProps) {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+export default function LoginScreen({ onLogin }: LoginProps) {
+  const [email, setEmail] = useState("admin@admin.com");
+  const [senha, setSenha] = useState("admin123");
   const [erroEmail, setErroEmail] = useState("");
 
   const errors = {
@@ -26,7 +28,8 @@ export default function LoginScreen({ navigation }: LoginProps) {
       Alert.alert("Preencha email e senha corretamente");
       return;
     }
-    navigation.replace("MainTabs");
+
+    onLogin();
   };
 
   const validateEmail = () => {

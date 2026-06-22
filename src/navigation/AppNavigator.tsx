@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import type { StackRaizParamList, HomeStackParamList, MainTabsParamList, PerfilStackParamList, MapaStackParamList, CarrinhoStackParamList } from "./types";
@@ -72,10 +73,17 @@ function MainTabs() {
 //screens relacionadas a visao do aplicativo mesmo com as categorias que se organizam em tab pois dali pode-se ir para as categorias ou carrinho, como funciona com amazon ou ifood
 
 export default function AppNavigator() {
+  const [logado, setLogado] = useState(false);
+
   return (
-    <StackRaiz.Navigator initialRouteName="LoginScreen">
-      <StackRaiz.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-      <StackRaiz.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
+    <StackRaiz.Navigator>
+      {logado ? (
+        <StackRaiz.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
+      ) : (
+        <StackRaiz.Screen name="LoginScreen" options={{ headerShown: false }}>
+          {(props) => <LoginScreen {...props} onLogin={() => setLogado(true)} />}
+        </StackRaiz.Screen>
+      )}
     </StackRaiz.Navigator>
   );
 }

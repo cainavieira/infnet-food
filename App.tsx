@@ -27,3 +27,4 @@ export default function App() {
   );
 }
 
+//A ideia é rodar o APP em docker
