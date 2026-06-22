@@ -31,3 +31,8 @@ export type MapaStackParamList = {
   MapaScreen: undefined;
   RestauranteDetalhe: { restaurante: Restaurante };
 };
+
+export type CarrinhoStackParamList = {
+  CarrinhoScreen: undefined;
+  Checkout: { total: number };
+};

@@ -1,8 +1,12 @@
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import { View, Text, FlatList, Image, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useCarrinho } from "../context/CarrinhoContext";
+import type { CarrinhoStackParamList } from "../navigation/types";
 
-export default function CarrinhoScreen() {
+type CarrinhoScreenProp = NativeStackScreenProps<CarrinhoStackParamList, "CarrinhoScreen">;
+
+export default function CarrinhoScreen({ navigation }: CarrinhoScreenProp) {
   const { itens } = useCarrinho();
 
   const total = itens.reduce((acc, i) => acc + i.preco * i.quantidade, 0);
@@ -36,8 +40,16 @@ export default function CarrinhoScreen() {
         )}
         ListFooterComponent={
           <View style={styles.containerTotal}>
-            <Text style={styles.textoTotal}>Total</Text>
-            <Text style={styles.valorTotal}>R$ {total.toFixed(2)}</Text>
+            <View>
+              <Text style={styles.textoTotal}>Total</Text>
+              <Text style={styles.valorTotal}>R$ {total.toFixed(2)}</Text>
+            </View>
+            <Pressable
+              style={styles.btnFechar}
+              onPress={() => navigation.navigate("Checkout", { total })}
+            >
+              <Text style={styles.textoBtnFechar}>Fechar Pedido</Text>
+            </Pressable>
           </View>
         }
       />
@@ -120,5 +132,18 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontFamily: "Lato_700Bold",
     color: "goldenrod",
+  },
+  btnFechar: {
+    backgroundColor: "goldenrod",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+    alignSelf: "center",
+  },
+  textoBtnFechar: {
+    fontFamily: "Lato_700Bold",
+    fontSize: 14,
+    color: "darkslategray",
+    textAlign: "center",
   },
 });

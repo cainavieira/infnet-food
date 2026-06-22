@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import type { StackRaizParamList, HomeStackParamList, MainTabsParamList, PerfilStackParamList, MapaStackParamList } from "./types";
+import type { StackRaizParamList, HomeStackParamList, MainTabsParamList, PerfilStackParamList, MapaStackParamList, CarrinhoStackParamList } from "./types";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProdutosScreen from "../screens/ProdutosScreen";
@@ -10,12 +10,14 @@ import PerfilScreen from "../screens/PerfilScreen";
 import PedidosScreen from "../screens/PedidosScreen";
 import PedidosRealizadosScreen from "../screens/PedidosRealizadosScreen";
 import MapaScreen from "../screens/MapaScreen";
+import CheckoutScreen from "../screens/CheckoutScreen";
 import RestauranteDetailsScreen from "../screens/RestauranteDetailsScreen";
 
 const StackRaiz = createNativeStackNavigator<StackRaizParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const PerfilStack = createNativeStackNavigator<PerfilStackParamList>();
 const MapaStack = createNativeStackNavigator<MapaStackParamList>();
+const CarrinhoStack = createNativeStackNavigator<CarrinhoStackParamList>();
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 
 function HomeStackNavigator() {
@@ -28,6 +30,15 @@ function HomeStackNavigator() {
   );
 }
 //screens relacionada aos produtos e categoria que se organiza em pilha
+
+function CarrinhoStackNavigator() {
+  return (
+    <CarrinhoStack.Navigator>
+      <CarrinhoStack.Screen name="CarrinhoScreen" component={CarrinhoScreen} options={{ headerShown: false }} />
+      <CarrinhoStack.Screen name="Checkout" component={CheckoutScreen} />
+    </CarrinhoStack.Navigator>
+  );
+}
 
 function MapaStackNavigator() {
   return (
@@ -52,7 +63,7 @@ function MainTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Início" component={HomeStackNavigator} options={{ headerShown: false }} />
-      <Tab.Screen name="Carrinho" component={CarrinhoScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Carrinho" component={CarrinhoStackNavigator} options={{ headerShown: false }} />
       <Tab.Screen name="Perfil" component={PerfilStackNavigator} options={{ headerShown: false }} />
       <Tab.Screen name="Mapa" component={MapaStackNavigator} options={{ headerShown: false }} />
     </Tab.Navigator>
